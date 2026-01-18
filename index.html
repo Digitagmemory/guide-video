@@ -1,1 +1,456 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tutoriels - Plaque NFC & Mémorial</title>
+    <meta name="description" content="Tutoriels vidéos pour la pose de plaques NFC funéraires et la création de mémoriaux en ligne.">
+    
+    <style>
+        /* --- RESET & VARIABLES --- */
+        :root {
+            /* Palette Premium Sombre */
+            --bg-dark: #121212;
+            --bg-card: #1E1E1E;
+            --text-primary: #FFFFFF;
+            --text-secondary: #A0A0A0;
+            --accent-gold: #D4AF37; /* Or sobre pour la touche premium */
+            --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.5);
+            --shadow-hover: 0 15px 40px rgba(0, 0, 0, 0.7);
+            --radius: 12px;
+            --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            --transition: all 0.3s ease;
+        }
 
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* --- HEADER --- */
+        header {
+            display: flex;
+            align-items: center;
+            padding: 20px 40px;
+            background: rgba(18, 18, 18, 0.9);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .logo-container img {
+            height: 40px;
+            width: auto;
+            margin-right: 20px;
+            display: block;
+        }
+
+        .header-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            color: var(--text-primary);
+            text-transform: uppercase;
+            border-left: 1px solid var(--accent-gold);
+            padding-left: 20px;
+        }
+
+        /* --- MAIN CONTENT --- */
+        main {
+            flex: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .hero-section {
+            margin-bottom: 60px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            font-weight: 300;
+        }
+
+        /* --- GRID SYSTEM --- */
+        .video-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+            margin: 0 auto;
+        }
+
+        @media (min-width: 768px) {
+            .video-grid {
+                grid-template-columns: 1fr 1fr;
+                max-width: 1000px;
+            }
+        }
+
+        /* --- VIDEO CARDS --- */
+        .card {
+            background-color: var(--bg-card);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-soft);
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            text-align: left;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            group: card; /* For grouping hover effects */
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-hover);
+            border-color: rgba(212, 175, 55, 0.3); /* Lueur dorée subtile */
+        }
+
+        .thumbnail-wrapper {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16/9;
+            background: #000;
+            overflow: hidden;
+        }
+
+        /* Video as thumbnail styling */
+        .thumbnail-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+
+        .card:hover .thumbnail-video {
+            opacity: 1;
+        }
+
+        /* Play Button Overlay */
+        .play-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(1);
+            width: 60px;
+            height: 60px;
+            background: rgba(0, 0, 0, 0.6);
+            border: 2px solid var(--text-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            backdrop-filter: blur(2px);
+        }
+
+        .play-overlay::after {
+            content: '';
+            display: block;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 8px 0 8px 14px;
+            border-color: transparent transparent transparent var(--text-primary);
+            margin-left: 4px; /* Optical centering */
+        }
+
+        .card:hover .play-overlay {
+            background: var(--accent-gold);
+            border-color: var(--accent-gold);
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+
+        .card:hover .play-overlay::after {
+            border-color: transparent transparent transparent #000;
+        }
+
+        .card-content {
+            padding: 25px;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+
+        .card-desc {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            margin-top: auto;
+        }
+
+        /* --- LIGHTBOX / MODAL --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            padding: 20px;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-container {
+            position: relative;
+            width: 100%;
+            max-width: 900px;
+            background: #000;
+            border-radius: var(--radius);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+            overflow: hidden;
+            transform: scale(0.95);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.active .modal-container {
+            transform: scale(1);
+        }
+
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%; /* Ratio 16:9 */
+            height: 0;
+            background: #000;
+        }
+
+        .video-wrapper video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            outline: none;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: -50px;
+            right: 0;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 2rem;
+            cursor: pointer;
+            padding: 10px;
+            transition: color 0.2s;
+            z-index: 1001;
+        }
+
+        .close-btn:hover {
+            color: var(--accent-gold);
+        }
+        
+        /* Ajustement du bouton fermer sur desktop pour qu'il soit plus proche */
+        @media (min-width: 960px) {
+            .close-btn {
+                top: 10px;
+                right: 15px;
+                background: rgba(0,0,0,0.5);
+                border-radius: 50%;
+                width: 40px;
+                height: 40px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 1.5rem;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="logo-container">
+            <!-- Remplacer le chemin si nécessaire -->
+            <img src="assets/logo.svg" alt="Logo Entreprise" onerror="this.onerror=null; this.src='https://placehold.co/100x40/1a1a1a/FFF?text=LOGO';">
+        </div>
+        <div class="header-title">Guides & Tutoriels</div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <div class="hero-section">
+            <h1>Installation de votre Plaque NFC</h1>
+            <p class="subtitle">Guide vidéo pour la pose sur monument funéraire et la création du mémorial.</p>
+        </div>
+
+        <div class="video-grid">
+            
+            <!-- Carte 1 : Pose -->
+            <article class="card" onclick="openModal('assets/video-pose.mp4')" role="button" tabindex="0" aria-label="Regarder la vidéo : Poser la plaque NFC">
+                <div class="thumbnail-wrapper">
+                    <!-- Miniature via balise video (ne se lance pas seule) -->
+                    <video class="thumbnail-video" muted preload="metadata">
+                        <source src="assets/video-pose.mp4" type="video/mp4">
+                    </video>
+                    <div class="play-overlay"></div>
+                </div>
+                <div class="card-content">
+                    <h2 class="card-title">Poser la plaque NFC</h2>
+                    <p class="card-desc">Instructions de pose sur monument funéraire.</p>
+                </div>
+            </article>
+
+            <!-- Carte 2 : Mémorial -->
+            <article class="card" onclick="openModal('assets/video-memorial.mp4')" role="button" tabindex="0" aria-label="Regarder la vidéo : Créer le mémorial">
+                <div class="thumbnail-wrapper">
+                    <video class="thumbnail-video" muted preload="metadata">
+                        <source src="assets/video-memorial.mp4" type="video/mp4">
+                    </video>
+                    <div class="play-overlay"></div>
+                </div>
+                <div class="card-content">
+                    <h2 class="card-title">Créer le mémorial</h2>
+                    <p class="card-desc">Configurer et personnaliser l'espace souvenir.</p>
+                </div>
+            </article>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        &copy; <script>document.write(new Date().getFullYear())</script> - Tous droits réservés.
+    </footer>
+
+    <!-- Lightbox Modal -->
+    <div id="videoModal" class="modal-overlay" aria-hidden="true">
+        <button class="close-btn" onclick="closeModal()" aria-label="Fermer la vidéo">&times;</button>
+        <div class="modal-container" onclick="event.stopPropagation()">
+            <div class="video-wrapper">
+                <video id="mainPlayer" controls controlsList="nodownload">
+                    <source src="" type="video/mp4">
+                    Votre navigateur ne supporte pas la balise vidéo.
+                </video>
+            </div>
+        </div>
+    </div>
+
+    <!-- Logic -->
+    <script>
+        // Variables DOM
+        const modal = document.getElementById('videoModal');
+        const player = document.getElementById('mainPlayer');
+        const body = document.body;
+
+        /**
+         * Ouvre la modale et lance la vidéo
+         * @param {string} videoSrc - Le chemin relatif vers le fichier vidéo
+         */
+        function openModal(videoSrc) {
+            if (!videoSrc) return;
+
+            // Met à jour la source
+            player.src = videoSrc;
+            
+            // Affiche la modale
+            modal.classList.add('active');
+            modal.setAttribute('aria-hidden', 'false');
+            
+            // Empêche le scroll derrière
+            body.style.overflow = 'hidden';
+
+            // Lance la lecture (petite latence pour la transition CSS)
+            setTimeout(() => {
+                player.play().catch(e => console.log("Lecture auto bloquée par le navigateur, clic requis.", e));
+            }, 300);
+        }
+
+        /**
+         * Ferme la modale, arrête la vidéo et nettoie la source
+         */
+        function closeModal() {
+            modal.classList.remove('active');
+            modal.setAttribute('aria-hidden', 'true');
+            body.style.overflow = '';
+            
+            // Pause et reset
+            player.pause();
+            setTimeout(() => {
+                player.src = "";
+            }, 300); // Attendre la fin de l'anim de fermeture
+        }
+
+        // Fermeture via clic sur le fond sombre
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+
+        // Fermeture via touche ESC
+        document.addEventListener('keydown', (e) => {
+            if (e.key === "Escape" && modal.classList.contains('active')) {
+                closeModal();
+            }
+        });
+
+        // Gestion Accessibilité (Navigation clavier sur les cartes)
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('keydown', (e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    // Récupère l'URL depuis l'attribut onclick (méthode simple) 
+                    // ou mieux, on pourrait utiliser un attribut data-src
+                    const onclickVal = card.getAttribute('onclick');
+                    const url = onclickVal.match(/'([^']+)'/)[1];
+                    openModal(url);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
