@@ -43,6 +43,7 @@
         header {
             display: flex;
             align-items: center;
+            justify-content: space-between; /* Permet d'espacer le logo du bouton contact */
             padding: 20px 40px;
             background: rgba(18, 18, 18, 0.9);
             backdrop-filter: blur(10px);
@@ -50,6 +51,36 @@
             top: 0;
             z-index: 10;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+        }
+
+        .header-contact-btn {
+            text-decoration: none;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 8px 16px;
+            border-radius: 20px;
+            transition: var(--transition);
+            white-space: nowrap;
+        }
+
+        .header-contact-btn:hover {
+            border-color: var(--accent-gold);
+            color: var(--accent-gold);
+        }
+
+        /* Adaptation mobile pour le header */
+        @media (max-width: 600px) {
+            header {
+                padding: 15px 20px;
+                flex-direction: column;
+                gap: 15px;
+            }
         }
 
         .logo-container img {
@@ -205,6 +236,47 @@
         .card-desc {
             font-size: 0.95rem;
             color: var(--text-secondary);
+        }
+
+        /* --- CONTACT CTA --- */
+        .contact-cta {
+            margin-top: 80px;
+            padding: 50px 20px;
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: var(--shadow-soft);
+        }
+
+        .contact-cta h2 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: var(--text-primary);
+        }
+
+        .contact-cta p {
+            color: var(--text-secondary);
+            margin-bottom: 30px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            background: var(--accent-gold);
+            color: #000;
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            border: 2px solid var(--accent-gold);
+        }
+
+        .btn-primary:hover {
+            background: transparent;
+            color: var(--accent-gold);
         }
 
         /* --- FOOTER --- */
@@ -379,11 +451,15 @@
 
     <!-- Header -->
     <header>
-        <div class="logo-container">
-            <!-- Logo mis à jour selon le nom de fichier fourni -->
-            <img src="Logo Digitag Memory blanc.svg" alt="Logo Digitag Memory" onerror="this.onerror=null; this.src='https://placehold.co/100x40/1a1a1a/FFF?text=LOGO';">
+        <div class="header-left">
+            <div class="logo-container">
+                <!-- Logo mis à jour selon le nom de fichier fourni -->
+                <img src="Logo Digitag Memory blanc.svg" alt="Logo Digitag Memory" onerror="this.onerror=null; this.src='https://placehold.co/100x40/1a1a1a/FFF?text=LOGO';">
+            </div>
+            <div class="header-title">Guides & Tutoriels</div>
         </div>
-        <div class="header-title">Guides & Tutoriels</div>
+        <!-- Bouton contact en haut -->
+        <a href="https://digitagmemory.fr/pages/contact" target="_blank" rel="noopener noreferrer" class="header-contact-btn">Nous contacter</a>
     </header>
 
     <!-- Main Content -->
@@ -425,6 +501,14 @@
             </article>
 
         </div>
+
+        <!-- Section Contact / Call to Action -->
+        <section class="contact-cta">
+            <h2>Besoin d'aide ?</h2>
+            <p>Si vous avez la moindre question concernant l'installation de votre plaque ou la configuration du mémorial, notre équipe est là pour vous accompagner.</p>
+            <a href="https://digitagmemory.fr/pages/contact" target="_blank" rel="noopener noreferrer" class="btn-primary">Contacter le support</a>
+        </section>
+
     </main>
 
     <!-- Footer -->
