@@ -273,6 +273,46 @@
             outline: none;
         }
 
+        /* --- SPEED CONTROLS --- */
+        .speed-controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 12px 20px;
+            background: #111;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .speed-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-right: 5px;
+        }
+
+        .speed-btn {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: var(--text-primary);
+            padding: 4px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: var(--transition);
+        }
+
+        .speed-btn:hover {
+            border-color: var(--accent-gold);
+            color: var(--accent-gold);
+        }
+
+        .speed-btn.active {
+            background: var(--accent-gold);
+            border-color: var(--accent-gold);
+            color: #000;
+            font-weight: 600;
+        }
+
         .close-btn {
             position: absolute;
             top: -50px;
@@ -376,6 +416,14 @@
                     Votre navigateur ne supporte pas la balise vidéo.
                 </video>
             </div>
+            <!-- Contrôles de vitesse -->
+            <div class="speed-controls">
+                <span class="speed-label">Vitesse :</span>
+                <button class="speed-btn" data-speed="0.5">0.5x</button>
+                <button class="speed-btn active" data-speed="1">1x</button>
+                <button class="speed-btn" data-speed="1.5">1.5x</button>
+                <button class="speed-btn" data-speed="2">2x</button>
+            </div>
         </div>
     </div>
 
@@ -385,6 +433,7 @@
         const modal = document.getElementById('videoModal');
         const player = document.getElementById('mainPlayer');
         const body = document.body;
+        const speedBtns = document.querySelectorAll('.speed-btn');
 
         /**
          * Ouvre la modale et lance la vidéo
@@ -419,10 +468,29 @@
             
             // Pause et reset
             player.pause();
+            
+            // Réinitialiser la vitesse de lecture
+            player.playbackRate = 1;
+            speedBtns.forEach(b => b.classList.remove('active'));
+            document.querySelector('.speed-btn[data-speed="1"]').classList.add('active');
+
             setTimeout(() => {
                 player.src = "";
             }, 300); // Attendre la fin de l'anim de fermeture
         }
+
+        // Gestion de la vitesse de lecture
+        speedBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Mise à jour de l'UI
+                speedBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                // Application de la vitesse sur la vidéo
+                const speed = parseFloat(btn.getAttribute('data-speed'));
+                player.playbackRate = speed;
+            });
+        });
 
         // Fermeture via clic sur le fond sombre
         modal.addEventListener('click', (e) => {
