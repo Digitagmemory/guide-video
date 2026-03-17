@@ -278,8 +278,9 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            flex-wrap: wrap; /* Permet aux éléments de passer à la ligne */
             gap: 10px;
-            padding: 12px 20px;
+            padding: 15px 15px;
             background: #111;
             border-top: 1px solid rgba(255, 255, 255, 0.05);
         }
@@ -288,17 +289,20 @@
             color: var(--text-secondary);
             font-size: 0.9rem;
             margin-right: 5px;
+            white-space: nowrap; /* Empêche la coupure du mot */
         }
 
         .speed-btn {
             background: transparent;
             border: 1px solid rgba(255, 255, 255, 0.2);
             color: var(--text-primary);
-            padding: 4px 12px;
-            border-radius: 20px;
+            padding: 8px 16px; /* Zone de clic plus confortable pour le tactile */
+            border-radius: 25px;
             cursor: pointer;
             font-size: 0.85rem;
             transition: var(--transition);
+            white-space: nowrap;
+            text-align: center;
         }
 
         .speed-btn:hover {
@@ -311,6 +315,28 @@
             border-color: var(--accent-gold);
             color: #000;
             font-weight: 600;
+        }
+
+        /* Responsive spécifique pour les contrôles sur petits écrans (smartphones) */
+        @media (max-width: 480px) {
+            .speed-controls {
+                gap: 6px;
+                padding: 12px 8px;
+            }
+            
+            .speed-label {
+                width: 100%; /* Place le texte "Vitesse :" sur sa propre ligne */
+                text-align: center;
+                margin-right: 0;
+                margin-bottom: 5px;
+                font-size: 0.85rem;
+            }
+
+            .speed-btn {
+                flex: 1; /* Permet aux boutons de se répartir équitablement l'espace */
+                padding: 8px 0; /* Ajuste le padding interne pour les petits écrans */
+                font-size: 0.8rem;
+            }
         }
 
         .close-btn {
@@ -372,6 +398,7 @@
             <!-- Carte 1 : Pose (Nom de fichier mis à jour) -->
             <article class="card" onclick="openModal('Démonstration pose de la palque.mp4')" role="button" tabindex="0" aria-label="Regarder la vidéo : Poser la plaque NFC">
                 <div class="thumbnail-wrapper">
+                    <!-- Miniature via balise video avec poster image -->
                     <video class="thumbnail-video" muted preload="metadata" poster="pose de la plaque.webp">
                         <source src="Démonstration pose de la palque.mp4" type="video/mp4">
                     </video>
@@ -384,9 +411,9 @@
             </article>
 
             <!-- Carte 2 : Mémorial -->
-            <article class="card" onclick="openModal('Guide vidéo création mémorial 720p.mp4')" role="button" tabindex="0" aria-label="Regarder la vidéo : Créer le mémorial">
+            <article class="card" onclick="openModal('video-memorial.mp4')" role="button" tabindex="0" aria-label="Regarder la vidéo : Créer le mémorial">
                 <div class="thumbnail-wrapper">
-                    <video class="thumbnail-video" muted preload="metadata" poster="scan qr code.webp">
+                    <video class="thumbnail-video" muted preload="metadata">
                         <source src="video-memorial.mp4" type="video/mp4">
                     </video>
                     <div class="play-overlay"></div>
